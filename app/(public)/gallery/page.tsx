@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ImageIcon } from "lucide-react";
 import { createSupabaseServer } from "@/lib/supabase-server";
 
 export const metadata: Metadata = {
@@ -20,46 +19,46 @@ export default async function GalleryPage() {
   const items = data ?? [];
 
   return (
-    <div className="mx-auto max-w-6xl px-5 py-16">
-      <h1 className="text-4xl font-black tracking-tight text-foreground sm:text-5xl">갤러리</h1>
+    <div className="mx-auto max-w-5xl px-5 py-16">
+      <h1 className="text-xs font-medium tracking-[0.2em] text-muted uppercase">Gallery</h1>
 
       {items.length === 0 ? (
-        <p className="mt-10 rounded-xl border border-border bg-surface px-6 py-20 text-center text-muted">
+        <p className="mt-10 py-20 text-center text-muted">
           등록된 갤러리가 없습니다
         </p>
       ) : (
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item) => (
             <Link
               key={item.id}
               href={`/gallery/${item.id}`}
-              className="group overflow-hidden rounded-xl border border-border bg-surface transition-colors hover:border-primary"
+              className="group"
             >
-              <div className="relative aspect-[4/3] bg-surface-light">
+              <div className="relative aspect-[4/3] overflow-hidden bg-surface">
                 {item.images?.[0] ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={item.images[0]}
                     alt={item.title}
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center text-border">
-                    <ImageIcon size={40} />
+                  <div className="flex h-full w-full items-center justify-center text-sm text-muted">
+                    {item.title}
                   </div>
                 )}
-                {item.images?.length > 0 && (
-                  <span className="absolute right-3 top-3 rounded-full bg-black/70 px-2.5 py-1 text-xs font-bold text-white">
-                    {item.images.length}
+                {item.images?.length > 1 && (
+                  <span className="absolute right-3 top-3 text-xs text-white/80">
+                    +{item.images.length - 1}
                   </span>
                 )}
               </div>
-              <div className="p-5">
-                <h3 className="text-lg font-bold text-foreground group-hover:text-primary">
+              <div className="mt-2">
+                <h3 className="text-sm font-medium text-foreground">
                   {item.title}
                 </h3>
                 {item.description && (
-                  <p className="mt-1.5 line-clamp-2 text-sm text-muted">{item.description}</p>
+                  <p className="mt-0.5 line-clamp-1 text-xs text-muted">{item.description}</p>
                 )}
               </div>
             </Link>

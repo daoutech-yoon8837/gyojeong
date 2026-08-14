@@ -26,11 +26,9 @@ export default async function AboutPage() {
   const members = membersRes.data ?? [];
 
   return (
-    <div className="mx-auto max-w-5xl px-5 py-16">
-      <h1 className="text-4xl font-black tracking-tight text-foreground sm:text-5xl">소개</h1>
-
-      <section className="mt-10 grid gap-8 md:grid-cols-[280px_1fr]">
-        <div className="aspect-square overflow-hidden rounded-xl border border-border bg-surface">
+    <div className="mx-auto max-w-4xl px-5 py-16">
+      <section className="grid gap-10 md:grid-cols-[280px_1fr]">
+        <div className="aspect-square overflow-hidden bg-surface">
           {band?.profile_image ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -39,25 +37,17 @@ export default async function AboutPage() {
               className="h-full w-full object-cover"
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-surface-light to-black text-5xl font-black text-border">
+            <div className="flex h-full w-full items-center justify-center bg-surface text-4xl font-bold text-muted/30">
               {band?.name ?? "교정"}
             </div>
           )}
         </div>
 
-        <div>
-          <h2 className="text-3xl font-black text-foreground">{band?.name ?? "교정"}</h2>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {band?.genre && (
-              <span className="rounded-full bg-primary/15 px-3 py-1 text-xs font-bold text-primary">
-                {band.genre}
-              </span>
-            )}
-            {band?.formed_year && (
-              <span className="rounded-full bg-surface-light px-3 py-1 text-xs font-bold text-muted">
-                {band.formed_year}년 결성
-              </span>
-            )}
+        <div className="flex flex-col justify-center">
+          <h1 className="text-3xl font-bold text-foreground">{band?.name ?? "교정"}</h1>
+          <div className="mt-3 flex flex-wrap gap-3 text-sm text-muted">
+            {band?.genre && <span>{band.genre}</span>}
+            {band?.formed_year && <span>{band.formed_year}년 결성</span>}
           </div>
           <p className="mt-6 whitespace-pre-line text-base leading-relaxed text-muted">
             {band?.description ?? "밴드 소개가 준비 중입니다."}
@@ -65,21 +55,14 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="mt-20">
-        <h2 className="text-3xl font-black tracking-tight text-foreground">멤버</h2>
+      {members.length > 0 && (
+        <section className="mt-20 border-t border-border pt-16">
+          <h2 className="text-xs font-medium tracking-[0.2em] text-muted uppercase">Members</h2>
 
-        {members.length === 0 ? (
-          <p className="mt-8 rounded-xl border border-border bg-surface px-6 py-16 text-center text-muted">
-            등록된 멤버가 없습니다
-          </p>
-        ) : (
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {members.map((member) => (
-              <div
-                key={member.id}
-                className="overflow-hidden rounded-xl border border-border bg-surface"
-              >
-                <div className="aspect-[4/5] bg-surface-light">
+              <div key={member.id}>
+                <div className="aspect-[4/5] overflow-hidden bg-surface">
                   {member.photo ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
@@ -88,16 +71,16 @@ export default async function AboutPage() {
                       className="h-full w-full object-cover"
                     />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center text-border">
-                      <User size={56} />
+                    <div className="flex h-full w-full items-center justify-center text-muted/30">
+                      <User size={48} />
                     </div>
                   )}
                 </div>
-                <div className="p-5">
-                  <p className="text-xs font-bold tracking-widest text-accent">{member.role}</p>
-                  <h3 className="mt-1 text-xl font-bold text-foreground">{member.name}</h3>
+                <div className="mt-3">
+                  <h3 className="text-base font-medium text-foreground">{member.name}</h3>
+                  <p className="text-sm text-muted">{member.role}</p>
                   {member.bio && (
-                    <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-muted">
+                    <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-muted">
                       {member.bio}
                     </p>
                   )}
@@ -105,8 +88,8 @@ export default async function AboutPage() {
               </div>
             ))}
           </div>
-        )}
-      </section>
+        </section>
+      )}
     </div>
   );
 }

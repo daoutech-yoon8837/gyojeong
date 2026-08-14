@@ -36,17 +36,17 @@ export default async function AlbumDetailPage({
   const available = STREAMING.filter((item) => links[item.key]);
 
   return (
-    <div className="mx-auto max-w-4xl px-5 py-12">
+    <div className="mx-auto max-w-3xl px-5 py-12">
       <Link
         href="/music"
-        className="inline-flex items-center gap-2 text-sm font-bold text-muted transition-colors hover:text-primary"
+        className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-foreground"
       >
-        <ArrowLeft size={16} />
-        음악 목록
+        <ArrowLeft size={14} />
+        Discography
       </Link>
 
-      <div className="mt-8 grid gap-8 md:grid-cols-[minmax(0,300px)_1fr]">
-        <div className="aspect-square overflow-hidden rounded-xl border border-border bg-surface-light">
+      <div className="mt-10 grid gap-10 md:grid-cols-[minmax(0,260px)_1fr]">
+        <div className="aspect-square overflow-hidden bg-surface">
           {album.cover_image ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -55,23 +55,23 @@ export default async function AlbumDetailPage({
               className="h-full w-full object-cover"
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center text-border">
-              <Disc3 size={64} />
+            <div className="flex h-full w-full items-center justify-center text-muted/30">
+              <Disc3 size={48} />
             </div>
           )}
         </div>
 
         <div>
-          <h1 className="text-3xl font-black leading-tight tracking-tight text-foreground sm:text-4xl">
+          <h1 className="text-2xl font-bold text-foreground sm:text-3xl">
             {album.title}
           </h1>
           {album.release_date && (
-            <p className="mt-2 text-sm font-bold text-accent">
-              {formatDate(album.release_date)} 발매
+            <p className="mt-1 text-sm text-muted">
+              {formatDate(album.release_date)}
             </p>
           )}
           {album.description && (
-            <p className="mt-5 whitespace-pre-line text-base leading-relaxed text-muted">
+            <p className="mt-5 whitespace-pre-line text-sm leading-relaxed text-muted">
               {album.description}
             </p>
           )}
@@ -84,9 +84,9 @@ export default async function AlbumDetailPage({
                   href={links[key]}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-5 py-2.5 text-sm font-bold text-foreground transition-colors hover:border-primary hover:text-primary"
+                  className="inline-flex items-center gap-1.5 text-sm text-muted underline-offset-4 hover:text-foreground hover:underline"
                 >
-                  <Icon size={16} />
+                  <Icon size={14} />
                   {label}
                 </a>
               ))}
@@ -95,30 +95,26 @@ export default async function AlbumDetailPage({
         </div>
       </div>
 
-      <section className="mt-14">
-        <h2 className="text-2xl font-black text-foreground">트랙 리스트</h2>
-        {!tracks || tracks.length === 0 ? (
-          <p className="mt-6 rounded-xl border border-border bg-surface px-6 py-14 text-center text-muted">
-            등록된 트랙이 없습니다
-          </p>
-        ) : (
-          <ul className="mt-6 divide-y divide-border overflow-hidden rounded-xl border border-border bg-surface">
+      {tracks && tracks.length > 0 && (
+        <section className="mt-14 border-t border-border pt-10">
+          <h2 className="text-xs font-medium tracking-[0.2em] text-muted uppercase">Tracklist</h2>
+          <ul className="mt-4 divide-y divide-border">
             {tracks.map((track) => (
-              <li key={track.id} className="flex items-center gap-4 px-5 py-4">
-                <span className="w-6 shrink-0 text-sm font-bold text-muted">
+              <li key={track.id} className="flex items-center gap-4 py-3">
+                <span className="w-6 shrink-0 text-sm text-muted">
                   {track.track_number}
                 </span>
-                <span className="min-w-0 flex-1 truncate text-base font-medium text-foreground">
+                <span className="min-w-0 flex-1 truncate text-sm text-foreground">
                   {track.title}
                 </span>
                 {track.duration && (
-                  <span className="shrink-0 text-sm text-muted">{track.duration}</span>
+                  <span className="shrink-0 text-xs text-muted">{track.duration}</span>
                 )}
               </li>
             ))}
           </ul>
-        )}
-      </section>
+        </section>
+      )}
     </div>
   );
 }

@@ -28,25 +28,25 @@ export default async function GalleryDetailPage({
     <div className="mx-auto max-w-5xl px-5 py-12">
       <Link
         href="/gallery"
-        className="inline-flex items-center gap-2 text-sm font-bold text-muted transition-colors hover:text-primary"
+        className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-foreground"
       >
-        <ArrowLeft size={16} />
-        갤러리 목록
+        <ArrowLeft size={14} />
+        Gallery
       </Link>
 
-      <h1 className="mt-8 text-3xl font-black tracking-tight text-foreground sm:text-4xl">
+      <h1 className="mt-8 text-2xl font-bold text-foreground">
         {item.title}
       </h1>
-      <p className="mt-2 text-sm text-muted">{formatDate(item.created_at)}</p>
+      <p className="mt-1 text-xs text-muted">{formatDate(item.created_at)}</p>
       {item.description && (
-        <p className="mt-4 whitespace-pre-line text-base leading-relaxed text-muted">
+        <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-muted">
           {item.description}
         </p>
       )}
 
       <div className="mt-8">
         {images.length === 0 ? (
-          <p className="rounded-xl border border-border bg-surface px-6 py-20 text-center text-muted">
+          <p className="py-20 text-center text-muted">
             등록된 이미지가 없습니다
           </p>
         ) : (
